@@ -1,0 +1,66 @@
+html,
+body {
+    height: 100%;
+    background: url(/assets/images/login_bg.jpg) no-repeat;
+    background-size: cover;
+    /* 解决外边距塌陷的问题 */
+    overflow: hidden;
+}
+
+
+/* logo */
+
+#logo {
+    /* 出现滚动条，原因，外边距塌陷 */
+    margin: 20px 0 0 130px;
+}
+
+
+/* login */
+
+#login,
+#register {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 410px;
+    height: 300px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+}
+
+
+/* 隐藏注册盒子 */
+
+#register {
+    display: none;
+}
+
+.title {
+    height: 60px;
+    background: url(/assets/images/login_title.png) no-repeat center;
+}
+
+.layui-form {
+    margin: 0 30px;
+}
+
+#goto-register,
+#goto-login {
+    float: right;
+}
+
+.layui-form-item {
+    position: relative;
+}
+
+.layui-icon {
+    /* 字体图标的位置 */
+    position: absolute;
+    top: 10px;
+    left: 5px;
+}
+
+.layui-input {
+    padding-left: 30px;
+}
