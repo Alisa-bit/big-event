@@ -36,5 +36,16 @@ $(function() {
         })
     }
     getLoad();
-
+    /****完成退出功能*****/
+    // 思路：弹出提示框，如果确定退出,删除本地存储的token,跳转到登录界面
+    $('#exit').click(function() {
+        layer.confirm('确定退出吗?', { icon: 3, title: '提示' }, function(index) {
+            // 回调函数，点击确定之后触发
+            //1、 删除本地存储的token
+            localStorage.removeItem('token');
+            // 2、跳转到登录页面
+            location.href = '/login.html';
+            layer.close(index);
+        });
+    });
 })
