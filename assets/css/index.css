@@ -14,8 +14,11 @@
     border-bottom: 1px solid rgb(40, 43, 51);
 }
 
+.layui-nav-img {
+    display: none;
+}
+
 .txt-avater {
-    display: inline-block;
     height: 40px;
     width: 40px;
     background-color: #419488;

@@ -17,7 +17,7 @@ $(function() {
         // 调用接口
         $.ajax({
             type: 'POST',
-            url: 'http://ajax.frontend.itheima.net/api/reguser',
+            url: '/api/reguser',
             data: data,
             success: function(res) {
                 // ajax请求成功后的提示信息
@@ -63,7 +63,7 @@ $(function() {
         // 把账号密码提交给接口
         $.ajax({
             type: 'POST',
-            url: 'http://ajax.frontend.itheima.net/api/login',
+            url: '/api/login',
             data: data,
             success: function(res) {
                 // 无论成功与否都弹出提示信息
