@@ -11,30 +11,29 @@
 
 <body>
     <div class="layui-card">
-
         <div class="layui-card-header">修改密码</div>
         <div class="layui-card-body">
             <form class="layui-form" action="">
                 <div class="layui-form-item">
                     <label class="layui-form-label">原密码</label>
                     <div class="layui-input-inline">
-                        <input type="password" name="oldPwd" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input oldPwd">
+                        <input type="password" name="oldPwd" required lay-verify="required|len" placeholder="请输入密码" autocomplete="off" class="layui-input oldPwd">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请输入6-12的密码</div>
+                    <div class="layui-form-mid layui-word-aux">请输入6-12的原密码</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">新密码</label>
                     <div class="layui-input-inline">
-                        <input type="password" name="newPwd" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input newPwd">
+                        <input type="password" name="newPwd" required lay-verify="required|len|isSame" placeholder="请输入密码" autocomplete="off" class="layui-input newPwd">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请输入6-12的密码</div>
+                    <div class="layui-form-mid layui-word-aux">请输入6-12的新密码，注意不能和原密码相同</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">确认密码</label>
                     <div class="layui-input-inline">
-                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                        <input type="password" name="password" required lay-verify="required|len|isSure" placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请输入6-12的密码</div>
+                    <div class="layui-form-mid layui-word-aux">请再次输入6-12的新密码，注意必须和新密码相同</div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
