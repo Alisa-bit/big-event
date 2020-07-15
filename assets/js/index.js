@@ -14,7 +14,10 @@ function getLoad() {
                 $('.layui-nav-img').hide();
                 // 2、设置头像
                 // 如果服务器返回的头像为null， 则把昵称的第一个字符作为头像
-                if (!res.data.user_pic) {
+                if (res.data.user_pic) {
+                    $('.layui-nav-img').attr('src', res.data.user_pic).show();
+                    $('.txt-avater').css({ display: 'none' });
+                } else {
                     // 获取昵称或者登录名的第一个首字符,并且转为大写
                     var first = name.substring(0, 1).toUpperCase();
                     $('.txt-avater').text(first).css({ display: 'inline-block' });
