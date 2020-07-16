@@ -10,6 +10,19 @@ function getRender() {
         data: data,
         success: function(res) {
             // console.log(res);
+            template.defaults.imports.formDate = function(d) {
+                var date = new Date(d);
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                var h = date.getHours();
+                h = h < 10 ? '0' + h : h;
+                var m = date.getMinutes();
+                m = m < 10 ? '0' + m : m;
+                var s = date.getSeconds();
+                s = s < 10 ? '0' + s : s;
+                return year + '-' + month + '-' + day + ' ' + h + ':' + m + ':' + s;
+            };
             //和分类不一样，只能自己看自己发布的文章
             // 把结果渲染到页面
             var html = template('tpl-render', res);
@@ -75,4 +88,35 @@ $('form').on('submit', function(e) {
     data.pagenum = 1; //修改显示的页码值
     // 重新渲染页面
     getRender();
+});
+
+/*******删除功能**********/
+$('tbody').on('click', '.btndel', function() {
+    // 获取当前点击按钮的自定义属性
+    var id = $(this).data('id');
+    // console.log(id);
+    layer.confirm('确认删除吗?', { icon: 3, title: '提示' }, function(index) {
+        // 调用接口删除
+        $.ajax({
+            url: '/my/article/delete/' + id,
+            success: function(res) {
+                layer.msg(res.message);
+                if (res.status == 0) {
+                    getRender();
+                }
+            }
+        });
+        layer.close(index);
+    });
+});
+
+/*******编辑功能**********/
+// 点击编辑页面跳转到编辑页面
+$('tbody').on('click', '.btnedit', function() {
+    // 获取当前点击按钮的自定义属性
+    var id = $(this).data('id');
+    // 页面跳转
+    location.href = 'edit.html';
+    // 当前获取到的id值保存到本地
+    sessionStorage.setItem('id', id);
 });

@@ -1,4 +1,6 @@
-/**********渲染下拉选项*******************************/
+var form = layui.form; //加载form模块
+var id = sessionStorage.getItem('id');
+/**********渲染下拉选项**************/
 $.ajax({
     url: '/my/article/cates',
     success: function(res) {
@@ -8,59 +10,71 @@ $.ajax({
         // 需要执行 form.render('select/checkbox/radio', filter);方法才会生效
         // filter是表单的lay-filter属性值
         var form = layui.form;
-        form.render('select', 'test');
+        form.render('select', 'edit');
     }
 });
+/*******获取服务器返回的数据，数据回填*********/
 
-/**********文章内容，调用富文本编辑器中的方法**************/
+// 下拉列表的默认选项为此时选中的id
+var image = $('#image');
+$.ajax({
+    url: '/my/article/' + id,
+    success: function(res) {
+        form.val('edit', {
+            Id: res.data.Id,
+            title: res.data.title,
+            content: res.data.content,
+            cate_id: res.data.cate_id
+        });
+        // 不能这样写，文件域不能value赋值，以下是错误写法
+        // form.val('edit', res.data)
+        // 修改图片得到地址
+        image.attr('src', 'http://ajax.frontend.itheima.net' + res.data.cover_img);
+
+        /*******剪裁，选择图片上传*********/
+        // 为什么实现裁剪效果要写到这里
+        // 原因：ajax是异步的，只有写到这来，要剪裁的图片才会跟上面的一致
+        image.cropper(option);
+    }
+});
+// 全局的配置项
+var option = {
+    aspectRatio: 400 / 280,
+    preview: '.img-preview'
+};
+
+/*******富文本编辑器初始化*********/
 initEditor();
 
-/**********剪裁功能，选择封面****************************/
-//1、 初始化剪裁区域
-var image = $('#image');
-var option = {
-    aspectRatio: 400 / 280, //图片宽高比
-    preview: '.img-preview', //预览区域
-};
-image.cropper(option);
-//2、点击选择封面按钮，选择文件
-// 思路：点击按钮自动触发文件域的点击事件即可事件
+
+/*******选择文件上传*********/
+// 点击选择封面按钮，自动触发文件域点击事件
 $('button:contains("选择封面")').click(function() {
     $('input[type=file]').trigger('click');
 });
-// 3、选择的文件已发生改变，更新剪裁区域图片
+// 选择的文件已发生改变，就更新剪裁区域图片
 $('input[type=file]').change(function() {
-    // 销毁原来的裁剪效果
-    image.cropper('destroy');
-    // 获取选择的文件对象
+    image.cropper('destroy'); //销毁之前的剪裁效果
     var file = this.files[0];
-    // console.dir(file);
-    // 文件对象创建一个临时的地址
     var url = URL.createObjectURL(file);
-    // 更换图片路径
-    image.attr('src', url);
-    // 重新创建剪裁区域
+    image.attr('src', url); //跟换图片路径
     image.cropper(option);
 });
 
-/**********添加文章**************************************/
+/*******修改数据*********/
 var s;
-// 根据点击的按钮添加对应的状态
+// 1、根据点击得到按钮判断状态
 $('button:contains("发布")').click(function() {
-    s = '已发布'
+    s = "已发布";
 });
 $('button:contains("存为草稿")').click(function() {
-    s = '草稿';
+    s = "草稿";
 });
-
 $('form').submit(function(e) {
     e.preventDefault();
-    // 因为有文件，所以要用formData
+    // 获取输入信息
     var data = new FormData(this);
     data.append('state', s);
-    // 遍历formData对象，才能看到数据
-    // 有的时候可能会获取不到值，调用富文本编辑器中内置方法获取内容
-    // 这里不能有追加append（append会有两个content），要用set修改值
     data.set('content', tinyMCE.activeEditor.getContent());
     // 剪裁图片
     var canvas = image.cropper('getCroppedCanvas', {
@@ -80,7 +94,7 @@ $('form').submit(function(e) {
         // ajax提交给接口，从而完成添加
         $.ajax({
             type: 'POST',
-            url: '/my/article/add',
+            url: '/my/article/edit',
             data: data,
             // 提交FormData数据，必须加下面两项
             processData: false,

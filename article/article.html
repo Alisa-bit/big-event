@@ -63,17 +63,18 @@
             <!-- 分页区end -->
         </div>
     </div>
+
     <!-- 渲染模板 -->
     <script type="text/html" id="tpl-render">
         {{each data}}
         <tr>
             <td>{{$value.title}}</td>
             <td>{{$value.cate_name}}</td>
-            <td>{{$value.pub_date}}</td>
+            <td>{{$value.pub_date|formDate}}</td>
             <td>{{$value.state}}</td>
             <td>
-                <button type="button" class="layui-btn layui-btn-xs btnedit">编辑</button>
-                <button type="button" class="layui-btn layui-btn-xs  layui-btn-danger btndel">删除</button>
+                <button type="button" class="layui-btn layui-btn-xs btnedit" data-id="{{$value.Id}}">编辑</button>
+                <button type="button" class="layui-btn layui-btn-xs  layui-btn-danger btndel" data-id="{{$value.Id}}">删除</button>
             </td>
         </tr>
         {{/each}}
