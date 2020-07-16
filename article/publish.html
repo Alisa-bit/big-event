@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/lib/layui/css/layui.css">
+    <!-- 加载剪裁插件的css -->
+    <link rel="stylesheet" href="/assets/lib/cropper/cropper.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/acticle/publish.css">
+</head>
+
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">写文章</div>
+        <div class="layui-card-body">
+            <form class="layui-form" action="" lay-filter="test">
+                <!-- 文章标题 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文章标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!-- 文章类别 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文章类别</label>
+                    <div class="layui-input-block">
+                        <select name="cate_id" lay-verify="required" id="list"> 
+                        </select>
+                    </div>
+                </div>
+                <!-- 文章内容 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文章内容</label>
+                    <div class="layui-input-block">
+                        <textarea name="content"></textarea><br/>
+                    </div>
+                </div>
+                <!-- 文章封面 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文章封面</label>
+                    <!-- 选择封面区域 -->
+                    <div class="layui-input-block cover-box">
+                        <!-- 左侧裁剪区域 -->
+                        <div class="cover-left">
+                            <img id="image" src="/assets/images/sample2.jpg" alt="" />
+                        </div>
+                        <!-- 右侧预览区域和选择封面区域 -->
+                        <div class="cover-right">
+                            <!-- 预览的区域 -->
+                            <div class="img-preview"></div>
+                            <!-- 选择封面按钮 -->
+                            <button type="button" class="layui-btn layui-btn-danger">选择封面</button>
+                            <!-- 选择要上传文件的文件域 -->
+                            <input type="file" name="cover_img" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                <!-- 按钮 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">发布</button>
+                        <button lay-submit class="layui-btn layui-btn-primary">存为草稿</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 文章类别下拉框模板 -->
+    <script type="text/html" id="tpl-category">
+        <option value="">所有分类</option>
+        {{each data}}
+        <option value="{{$value.Id}}">{{$value.name}}</option>
+        {{/each}}
+    </script>
+
+    <script src="/assets/lib/jquery.js"></script>
+    <script src="/assets/lib/template-web.js"></script>
+    <script src="/assets/lib/layui/layui.all.js"></script>
+    <!-- 加载剪裁js -->
+    <script src="/assets/lib/cropper/Cropper.js"></script>
+    <script src="/assets/lib/cropper/jquery-cropper.js"></script>
+
+    <!-- 加载富文本插件 -->
+    <script src="/assets/lib/tinymce/tinymce.min.js"></script>
+    <script src="/assets/lib/tinymce/tinymce_setup.js"></script>
+
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/acticle/publish.js"></script>
+</body>
+
+</html>
+
+</html>
